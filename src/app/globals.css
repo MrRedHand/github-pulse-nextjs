@@ -8,3 +8,13 @@
 body {
   font-family: var(--font-sans), system-ui, sans-serif;
 }
+
+.readme-content {
+  h2 {
+    margin: 15px 0 5px;
+  }
+
+  p {
+    margin: 5px 0;
+  }
+}
