@@ -1,5 +1,4 @@
 import { getCommits } from "@/entities/repository/api/get-commits";
-import { getReadme } from "@/entities/repository/api/get-readme";
 import { getRepository } from "@/entities/repository/api/get-repository";
 import { GitHubNotFoundError } from "@/entities/repository/api/github-client";
 import { RepositoryPage } from "@/features/repository/ui/RepositoryPage";
@@ -29,19 +28,12 @@ export default async function RepositoryRoutePage({ params }: PageProps) {
   const { owner, name } = await params;
 
   try {
-    const [repository, commits, readme] = await Promise.all([
+    const [repository, commits] = await Promise.all([
       getRepository(owner, name),
       getCommits(owner, name),
-      getReadme(owner, name),
     ]);
 
-    return (
-      <RepositoryPage
-        repository={repository}
-        commits={commits}
-        readme={readme}
-      />
-    );
+    return <RepositoryPage repository={repository} commits={commits} />;
   } catch (error) {
     if (error instanceof GitHubNotFoundError) {
       notFound();

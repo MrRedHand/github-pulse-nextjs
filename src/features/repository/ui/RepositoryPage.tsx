@@ -5,14 +5,15 @@ import { HealthScoreBadge } from "./HealthScoreBadge";
 import { ReadmeSection } from "./ReadmeSection";
 import { RepositoryHeader } from "./RepositoryHeader";
 import { RepositoryStats } from "./RepositoryStats";
+import { Suspense } from "react";
+import { ReadmeLoader } from "./ReadmeLoader";
 
 type Props = {
   repository: Repository;
   commits: Commit[];
-  readme: string;
 };
 
-export function RepositoryPage({ repository, commits, readme }: Props) {
+export function RepositoryPage({ repository, commits }: Props) {
   const healthScore = calculateHealthScore(repository, commits.length);
 
   return (
@@ -21,7 +22,13 @@ export function RepositoryPage({ repository, commits, readme }: Props) {
       <RepositoryStats repository={repository} />
       <HealthScoreBadge score={healthScore} />
       <CommitList commits={commits} />
-      <ReadmeSection content={readme} />
+      <Suspense
+        fallback={
+          <div className="mt-8 h-48 animate-pulse rounded-lg bg-zinc-100" />
+        }
+      >
+        <ReadmeLoader owner={repository.owner} name={repository.name} />
+      </Suspense>
     </main>
   );
 }

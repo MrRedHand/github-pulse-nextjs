@@ -9,7 +9,7 @@ export type HealthScoreBreakdown = {
 };
 
 function daysSince(dateStr: string): number {
-  return Date.now() - new Date(dateStr).getTime() / (1000 * 60 * 60 * 24);
+  return (Date.now() - new Date(dateStr).getTime()) / (1000 * 60 * 60 * 24);
 }
 
 function scoreActivity(lastPushedAt: string, commitCount: number): number {
