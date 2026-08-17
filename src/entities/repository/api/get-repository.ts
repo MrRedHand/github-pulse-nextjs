@@ -1,6 +1,7 @@
 import { GitHubRepositoryDto } from "@/shared/types/github-dto";
 import { Repository } from "../model/types";
 import { githubFetch } from "./github-client";
+import { cache } from "react";
 
 function mapRepositoryDto(dto: GitHubRepositoryDto): Repository {
   return {
@@ -17,13 +18,12 @@ function mapRepositoryDto(dto: GitHubRepositoryDto): Repository {
   };
 }
 
-export async function getRepository(
-  owner: string,
-  name: string,
-): Promise<Repository> {
-  const dto = await githubFetch<GitHubRepositoryDto>({
-    path: `/repos/${owner}/${name}`,
-  });
+export const getRepository = cache(
+  async (owner: string, name: string): Promise<Repository> => {
+    const dto = await githubFetch<GitHubRepositoryDto>({
+      path: `/repos/${owner}/${name}`,
+    });
 
-  return mapRepositoryDto(dto);
-}
+    return mapRepositoryDto(dto);
+  },
+);

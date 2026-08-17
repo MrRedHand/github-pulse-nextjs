@@ -32,7 +32,6 @@ export async function githubFetch<T>(options: GitHubClientOptions): Promise<T> {
     }
     throw new GitHubApiError(response.status, options.path);
   }
-
   return response.json() as Promise<T>;
 }
 

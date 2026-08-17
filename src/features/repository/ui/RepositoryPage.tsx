@@ -18,13 +18,15 @@ export function RepositoryPage({ repository, commits }: Props) {
 
   return (
     <main className="mx-auto max-w-3xl px-6 py-10">
-      <RepositoryHeader repository={repository} />
-      <RepositoryStats repository={repository} />
-      <HealthScoreBadge score={healthScore} />
-      <CommitList commits={commits} />
+      <div className="rounded-xl border border-zinc-200 bg-white p-8 shadow-sm">
+        <RepositoryHeader repository={repository} />
+        <RepositoryStats repository={repository} />
+        <HealthScoreBadge score={healthScore} />
+        <CommitList commits={commits} />
+      </div>
       <Suspense
         fallback={
-          <div className="mt-8 h-48 animate-pulse rounded-lg bg-zinc-100" />
+          <div className="mt-6 h-48 animate-pulse rounded-xl bg-zinc-200" />
         }
       >
         <ReadmeLoader owner={repository.owner} name={repository.name} />
